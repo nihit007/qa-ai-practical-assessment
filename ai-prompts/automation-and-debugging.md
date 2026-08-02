@@ -462,3 +462,71 @@ Generated reusable Faker utility methods to create realistic user profiles, addr
 - Updated username and email generation methods.
 - Ensured reusable and realistic test data generation.
 - Confirmed suitability for UI and API automation scenarios.
+
+## Entry 13 – Login & Registration Page Objects
+
+### Prompt
+
+Generate reusable Playwright Page Objects for the Login and Registration pages extending the BasePage class.
+
+### AI Response Summary
+
+Generated reusable Page Objects encapsulating login and registration workflows using the Page Object Model. The implementation centralized page locators and exposed reusable page actions without embedding assertions.
+
+### Validation Notes
+
+- Reviewed generated page structure for consistency with the framework.
+- Updated imports and method implementations.
+- Simplified page actions.
+- Confirmed assertions remain outside the page objects.
+
+## Entry 14 – Home & Product Page Objects
+
+### Prompt
+
+Generate reusable Playwright Page Objects for the Home and Product pages.
+
+### AI Response Summary
+
+Generated reusable HomePage and ProductPage classes supporting product search, product navigation, product information retrieval, quantity updates, and add-to-cart operations.
+
+### Validation Notes
+
+- Reviewed page actions and removed unnecessary complexity.
+- Standardized locator naming.
+- Simplified product availability checks.
+- Reused BasePage methods throughout.
+
+## Entry 15 – Cart & Checkout Page Objects
+
+### Prompt
+
+Generate reusable Playwright Page Objects for the Cart and Checkout pages.
+
+### AI Response Summary
+
+Generated reusable page objects supporting cart management, quantity updates, checkout, shipping information, billing information, and order placement.
+
+### Validation Notes
+
+- Reviewed generated implementation for readability.
+- Simplified repeated logic.
+- Standardized comments and naming conventions.
+- Confirmed compatibility with BasePage helper methods.
+
+## Entry 16 – Invoice Page Object
+
+### Prompt
+
+Generate a reusable InvoicePage extending BasePage.
+
+### AI Response Summary
+
+Generated a reusable page object supporting invoice display, invoice status retrieval, invoice download, and invoice verification.
+
+### Validation Notes
+
+- Reviewed implementation for consistency with the remaining page objects.
+- Standardized locator names.
+- Simplified download handling.
+- Confirmed reusable implementation aligned with the Page Object Model.
