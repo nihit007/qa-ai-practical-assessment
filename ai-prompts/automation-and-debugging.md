@@ -194,3 +194,205 @@ Generated a reusable `BasePage` class containing common Playwright UI actions su
 - Added reusable utility methods including `scrollIntoView()` and `waitForTimeout()` for debugging purposes.
 - Improved screenshot handling by storing screenshots in the dedicated `screenshots` directory.
 - Verified that the final BasePage remained generic, reusable, and aligned with the framework architecture before integrating it into the project.
+
+## Entry 4 – API Client Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `api/ApiClient.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Use Playwright APIRequestContext.
+- Accept APIRequestContext through the constructor.
+- Import configuration from `config/env.js`.
+- Store the API base URL.
+- Provide reusable methods:
+  - get(endpoint, headers = {})
+  - post(endpoint, body = {}, headers = {})
+  - put(endpoint, body = {}, headers = {})
+  - patch(endpoint, body = {}, headers = {})
+  - delete(endpoint, headers = {})
+- Automatically prepend the API base URL.
+- Allow custom headers.
+- Default request body should be JSON.
+- Return the Playwright Response object.
+- Keep the implementation generic.
+- Do not include endpoint-specific methods.
+- Add comments for maintainability.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `ApiClient` class that wraps Playwright's `APIRequestContext` and provides common HTTP methods (GET, POST, PUT, PATCH, DELETE). The implementation included centralized URL construction, request header management, configurable API base URL loading, and reusable request handling suitable for all API service classes.
+
+### Validation Notes
+
+- Reviewed the generated implementation for reusability and alignment with the framework architecture.
+- Replaced manual JSON serialization with Playwright's native request handling (`data` option).
+- Added token management using a reusable `setToken()` method for authenticated API requests.
+- Enhanced request header handling to automatically include the Authorization header when a bearer token is available.
+- Simplified URL construction logic and retained a generic design without endpoint-specific methods.
+- Confirmed that the final implementation serves as the common foundation for `AuthAPI`, `ProductAPI`, `CartAPI`, and `InvoiceAPI`.
+
+## Entry 5 – AuthAPI Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `api/AuthAPI.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Extend the reusable ApiClient class.
+- Implement authentication-related methods only.
+- Include:
+  - register(userData)
+  - login(credentials)
+  - getToken()
+  - setToken(token)
+- The login() method should:
+  - Call the login endpoint.
+  - Parse the response.
+  - Extract the access token.
+  - Store it using setToken().
+  - Return the response object.
+- Keep endpoint paths configurable.
+- Do not hardcode credentials.
+- Add comments for maintainability.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `AuthAPI` class extending `ApiClient` with methods for user registration, login, bearer token management, and token retrieval. The implementation centralized authentication endpoints and reused the generic API client methods for all authentication requests.
+
+### Validation Notes
+
+- Reviewed the generated implementation against the framework architecture.
+- Updated endpoint configuration to remain centralized and configurable.
+- Improved token extraction logic to support common API response structures.
+- Removed unnecessary method duplication while reusing the inherited `setToken()` implementation.
+- Added validation to ensure an access token is present after successful authentication.
+- Confirmed the class is reusable and serves as the authentication layer for all remaining API modules.
+
+## Entry 6 – ProductAPI Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `api/ProductAPI.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Extend the reusable ApiClient class.
+- Include methods for:
+  - getAllProducts(query = {})
+  - getProductById(productId)
+  - searchProducts(searchTerm)
+  - getProductsByCategory(category)
+  - getProductsByBrand(brand)
+- Reuse the generic GET method.
+- Validate required parameters.
+- Keep endpoint paths configurable.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `ProductAPI` class providing product retrieval, product details, search functionality, and filtering by category and brand using the common API client implementation.
+
+### Validation Notes
+
+- Reviewed the implementation for maintainability and reuse.
+- Centralized endpoint definitions.
+- Improved query parameter handling using reusable helper methods.
+- Added input validation and trimming for search, category, and brand values.
+- Reused existing methods to minimize duplicate code.
+- Confirmed compatibility with the shared `ApiClient`.
+
+## Entry 7 – CartAPI Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `api/CartAPI.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Extend the reusable ApiClient class.
+- Include methods for:
+  - createCart(cartData)
+  - getCart(cartId)
+  - addItemToCart(cartId, itemData)
+  - updateCartItem(cartId, itemId, itemData)
+  - removeCartItem(cartId, itemId)
+  - deleteCart(cartId)
+- Reuse generic HTTP methods.
+- Validate required parameters.
+- Keep endpoint paths configurable.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `CartAPI` class supporting cart creation, retrieval, product addition, quantity updates, item removal, and cart deletion using the shared API client implementation.
+
+### Validation Notes
+
+- Reviewed endpoint organization and parameter validation.
+- Simplified unnecessary validation logic while maintaining robustness.
+- Standardized comments and error messages across methods.
+- Verified reuse of generic HTTP methods from `ApiClient`.
+- Confirmed the implementation is reusable for all cart-related automation scenarios.
+
+## Entry 8 – InvoiceAPI Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `api/InvoiceAPI.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Extend the reusable ApiClient class.
+- Include methods for:
+  - createInvoice(invoiceData)
+  - getInvoice(invoiceId)
+  - getAllInvoices(query = {})
+  - verifyInvoice(invoiceId)
+  - downloadInvoice(invoiceId)
+- Reuse generic HTTP methods.
+- Validate required parameters.
+- Keep endpoint paths configurable.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `InvoiceAPI` class supporting invoice creation, retrieval, listing, verification, and download using the common API client implementation.
+
+### Validation Notes
+
+- Reviewed endpoint organization and helper methods.
+- Simplified invoice creation logic by reusing generic request methods.
+- Standardized validation and comments across all methods.
+- Confirmed compatibility with the shared `ApiClient`.
+- Ensured the implementation is generic, reusable, and suitable for invoice-related API automation.
