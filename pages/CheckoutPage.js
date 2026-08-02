@@ -110,30 +110,41 @@ class CheckoutPage extends BasePage {
     });
   }
 
-  async confirmPayment() {
-    await this.waitForVisible(this.confirmButton);
+async confirmPayment() {
+  await this.waitForVisible(this.confirmButton);
 
-    // First Confirm
-    await this.click(this.confirmButton);
+  await this.click(this.confirmButton);
 
-    // Wait until payment success message appears
-    await this.waitForVisible(this.paymentSuccessMessage);
-
-    // Give the UI a moment to render
-    await this.page.waitForTimeout(1000);
-
-    // Second Confirm
-    await this.click(this.confirmButton);
-
-    await this.waitForPageLoad();
+  // Wait until payment success message appears
+  await this.page
+    .locator(this.paymentSuccessMessage)
+    .waitFor({
+      state: "visible",
+      timeout: 15000,
+    });
 }
 
 async confirmOrder() {
-    await this.waitForVisible(this.confirmButton);
+  // Wait for the payment success message first
+  await this.page.locator(this.paymentSuccessMessage).waitFor({
+    state: "visible",
+    timeout: 15000,
+  });
 
-    await this.click(this.confirmButton);
+  // Wait until the Confirm button is enabled and clickable
+  await this.page.locator(this.confirmButton).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
 
-    await this.waitForVisible(this.orderSuccessMessage);
+  await this.page.waitForTimeout(1000);
+
+  await this.page.locator(this.confirmButton).click();
+
+  await this.page.locator(this.orderSuccessMessage).waitFor({
+    state: "visible",
+    timeout: 20000,
+  });
 }
 
   // ==========================
@@ -152,20 +163,15 @@ async confirmOrder() {
 
     return (await this.getText(this.invoiceNumber)).trim();
   }
+  
+async getPaymentSuccessMessage() {
+  await this.page.locator(this.paymentSuccessMessage).waitFor({
+    state: "visible",
+    timeout: 15000,
+  });
 
-  async getPaymentSuccessMessage() {
-    if (
-        await this.page
-            .locator(this.paymentSuccessMessage)
-            .isVisible()
-            .catch(() => false)
-    ) {
-        return (await this.getText(this.paymentSuccessMessage)).trim();
-    }
-
-    return "";
+  return (await this.getText(this.paymentSuccessMessage)).trim();
 }
-
   // ==========================
   // Complete Checkout
   // ==========================

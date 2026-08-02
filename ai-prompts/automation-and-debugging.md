@@ -595,7 +595,7 @@ The following refinements were made:
 
 The Product Details smoke test was successfully executed and integrated into the smoke test suite.
 
-## Entry X – Cart UI Automation
+## Entry 21 – Cart UI Automation
 
 AI was used to generate the initial Cart Page Object and Cart smoke test.
 
@@ -611,3 +611,30 @@ The following refinements were made:
 - Reviewed and refined the generated implementation to align with the project architecture and Playwright best practices.
 
 The Cart smoke test was successfully executed and integrated into the smoke test suite.
+
+## Entry 22 – Guest Checkout UI Automation
+
+AI was used to generate the initial Checkout Page Object and Guest Checkout smoke test.
+
+The generated implementation was manually reviewed and validated against the actual application checkout workflow.
+
+The following refinements were made:
+
+- Verified all checkout page locators using browser developer tools.
+- Updated the implementation to use the Guest Checkout flow after identifying inconsistent behavior with authenticated checkout.
+- Added reusable methods for proceeding through the cart, guest information, billing address, payment, and order confirmation steps.
+- Implemented support for selecting the "Cash on Delivery" payment method.
+- Refined synchronization logic to handle dynamic page transitions during the payment and order confirmation flow.
+- Separated page interactions from assertions to maintain the Page Object Model design.
+- Added validations for payment success, order confirmation, and generated invoice number.
+- Removed unnecessary assumptions from the AI-generated implementation and aligned the final code with the actual application behavior and Playwright best practices.
+
+The Guest Checkout smoke test was successfully executed and integrated into the smoke test suite after resolving synchronization and workflow issues.
+
+## Entry 23 – Invoice Verification Smoke Test
+
+The initial automation plan included a dedicated Invoice Verification smoke test.
+
+During implementation, it was identified that the invoice functionality is not fully available through the current UI workflow. Although invoice details are generated after a successful checkout, a standalone invoice verification flow cannot be reliably executed.
+
+To maintain a stable smoke suite, the dedicated Invoice Verification test was removed. Invoice number validation remains part of the Guest Checkout smoke test, ensuring successful order placement is still verified without depending on incomplete UI functionality.

@@ -67,21 +67,18 @@ test.describe("Checkout Smoke Tests", () => {
     // Complete Guest Checkout
     await checkoutPage.completeGuestCheckout(guestDetails);
 
-    // Verify Payment Success
-    const paymentMessage = await checkoutPage.getPaymentSuccessMessage();
-    expect(paymentMessage).toContain("Payment was successful");
+  const paymentMessage = await checkoutPage.getPaymentSuccessMessage();
+expect(paymentMessage).toContain("Payment was successful");
 
-    // Confirm Order
-    await checkoutPage.confirmOrder();
+// Confirm Order
+await checkoutPage.confirmOrder();
 
-    // Verify Order Confirmation
-    const orderMessage = await checkoutPage.getOrderSuccessMessage();
-    expect(orderMessage).toContain("Thanks for your order!");
+// Verify Order Confirmation
+const orderMessage = await checkoutPage.getOrderSuccessMessage();
+const invoiceNumber = await checkoutPage.getInvoiceNumber();
 
-    // Verify Invoice Number
-    const invoiceNumber = await checkoutPage.getInvoiceNumber();
-    expect(invoiceNumber).toMatch(/^INV-\d+$/);
-
-    console.log("Invoice Number:", invoiceNumber);
+expect(orderMessage).toContain("Thanks for your order!");
+expect(invoiceNumber).toMatch(/^INV-\d+$/);
+console.log("Invoice Number:", invoiceNumber);
   });
 });
