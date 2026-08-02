@@ -2,83 +2,81 @@ const BasePage = require("./BasePage");
 
 /**
  * CartPage
- * Handles cart page interactions.
+ * Encapsulates Cart page interactions.
  */
 class CartPage extends BasePage {
   constructor(page) {
     super(page);
 
-    // Locators
-    this.cartItems = ".cart-item";
-    this.cartItemName = ".cart-item-name";
-    this.cartItemQuantity = ".cart-item-quantity input";
-    this.cartItemPrice = ".cart-item-price";
+    // Cart page locators
+    this.productName = '[data-test="product-title"]';
+    this.quantityInput = '[data-test="product-quantity"]';
+    this.productPrice = "//span[@data-test='product-price']";
+    this.cartTotal = "//span[@data-test='line-price']";
 
-    this.removeButton = ".cart-item-remove";
-    this.cartTotal = '[data-test="cart-total"]';
-    this.checkoutButton = '[data-test="checkout"]';
+    this.removeButton = "//a/fa-icon[@class='ng-fa-icon']";
+    this.continueShoppingButton = "//button[@data-test='continue-shopping']";
+    this.proceedToCheckoutButton =
+      "//button[@data-test='proceed-1']";
   }
 
   /**
-   * Get all cart items.
-   * @returns {Promise<Array>}
+   * Get the product name displayed in the cart.
+   * @returns {Promise<string>}
    */
-  async getCartItems() {
-    const items = [];
-    const rows = this.page.locator(this.cartItems);
-    const count = await rows.count();
-
-    for (let i = 0; i < count; i++) {
-      const row = rows.nth(i);
-
-      items.push({
-        name: (await row.locator(this.cartItemName).textContent())?.trim(),
-        quantity: Number(
-          await row.locator(this.cartItemQuantity).inputValue()
-        ),
-        price: (await row.locator(this.cartItemPrice).textContent())?.trim(),
-      });
-    }
-
-    return items;
+  async getProductName() {
+    const productName = await this.getText(this.productName);
+    return productName?.trim() ?? "";
   }
 
   /**
-   * Update quantity of the first cart item.
-   * @param {number} quantity
+   * Get the product quantity.
+   * @returns {Promise<string>}
    */
-  async updateQuantity(quantity) {
-    const quantityInput = this.page
-      .locator(this.cartItems)
-      .first()
-      .locator(this.cartItemQuantity);
-
-    await quantityInput.fill(quantity.toString());
+  async getProductQuantity() {
+    await this.waitForVisible(this.quantityInput);
+    return await this.page.locator(this.quantityInput).inputValue();
   }
 
   /**
-   * Remove the first cart item.
+   * Get the product price.
+   * @returns {Promise<string>}
    */
-  async removeItem() {
-    await this.page
-      .locator(this.cartItems)
-      .first()
-      .locator(this.removeButton)
-      .click();
+  async getProductPrice() {
+    const productPrice = await this.getText(this.productPrice);
+    return productPrice?.trim() ?? "";
   }
 
   /**
-   * Proceed to checkout.
-   */
-  async proceedToCheckout() {
-    await this.click(this.checkoutButton);
-  }
-
-  /**
-   * Get cart total.
+   * Get the cart total.
+   * @returns {Promise<string>}
    */
   async getCartTotal() {
-    return this.getText(this.cartTotal);
+    const total = await this.getText(this.cartTotal);
+    return total?.trim() ?? "";
+  }
+
+  /**
+   * Remove the product from the cart.
+   */
+  async removeProduct() {
+    await this.click(this.removeButton);
+  }
+
+  /**
+   * Continue shopping.
+   */
+  async continueShopping() {
+    await this.click(this.continueShoppingButton);
+    await this.waitForPageLoad();
+  }
+
+  /**
+   * Proceed to Checkout.
+   */
+  async proceedToCheckout() {
+    await this.click(this.proceedToCheckoutButton);
+    await this.waitForPageLoad();
   }
 }
 

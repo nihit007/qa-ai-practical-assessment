@@ -16,6 +16,7 @@ class ProductPage extends BasePage {
     this.productPrice = "//span[@data-test='unit-price']";
     this.productDescription = '#description';
     this.productAvailability = '[data-test="product-stock"]';
+    this.cartIcon = '[data-test="nav-cart"]';
 
     this.quantityInput = '[data-test="product-quantity"]';
     this.addToCartButton = '#btn-add-to-cart';
@@ -36,6 +37,12 @@ class ProductPage extends BasePage {
     async getProductName() {
     const productName = await this.getText(this.productName);
     return productName?.trim() ?? "";
+    }
+
+    async openCart() {
+    await this.waitForVisible('[data-test="nav-cart"]');
+    await this.click('[data-test="nav-cart"]');
+    await this.waitForPageLoad();
     }
 
   /**
@@ -71,9 +78,10 @@ class ProductPage extends BasePage {
   /**
    * Add product to cart.
    */
-  async addToCart() {
-    await this.click(this.addToCartButton);
-  }
+ async addToCart() {
+  await this.waitForVisible(this.addToCartButton);
+  await this.click(this.addToCartButton);
+}
 }
 
 module.exports = ProductPage;

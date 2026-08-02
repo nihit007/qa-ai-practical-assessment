@@ -576,3 +576,21 @@ The following refinements were made:
 - Reviewed and refined the generated code to align with the framework architecture and Playwright best practices.
 
 The Product Search smoke test was executed successfully and integrated into the smoke test suite.
+
+
+## Entry 20 – Product Details UI Automation
+
+AI was used to generate the initial Product Page Object and Product Details smoke test.
+
+During implementation, the generated code was manually validated against the actual application.
+
+The following refinements were made:
+
+- Verified Product Details page locators using browser developer tools.
+- Updated locators to match the actual application elements.
+- Refined Page Object methods to return trimmed text values for consistent assertions.
+- Reused the HomePage search functionality to navigate to the Product Details page.
+- Verified the product title, price, description, and Add to Cart button using assertions in the test layer.
+- Reviewed and refined the generated implementation to align with the project architecture and Playwright best practices.
+
+The Product Details smoke test was successfully executed and integrated into the smoke test suite.
