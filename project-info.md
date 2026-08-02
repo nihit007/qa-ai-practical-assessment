@@ -105,35 +105,23 @@ The generated strategy was manually reviewed to ensure it aligned with the final
 
 ---
 
-## 6. How AI was used for Manual Test Case Design
+## 6. How AI was used for Automation Design
 
-AI was used to generate an initial set of manual test cases for the selected business flows.
+AI was used to assist in designing the automation framework before any implementation code was written.
 
-The generated test suite included:
+Instead of generating the entire framework at once, the framework was designed incrementally using an architecture-first approach.
 
-- Positive scenarios
-- Negative scenarios
-- Boundary value scenarios
-- UI validation scenarios
-- API validation scenarios
+The AI-assisted design activities included:
 
-The manual test cases were designed for:
+- Designing a scalable Playwright JavaScript framework using Prism Framework principles.
+- Defining the overall framework architecture before implementation.
+- Designing a reusable folder structure for UI and API automation.
+- Planning the Page Object Model (POM) for UI automation.
+- Designing a dedicated API service layer for backend automation.
+- Planning reusable utilities, fixtures, configuration, and test data management.
+- Creating a centralized environment configuration using `.env` and `config/env.js`.
+- Designing a reusable Playwright configuration with environment-driven execution, reporting, retries, screenshots, traces, and browser configuration.
 
-- User Registration
-- Login
-- Product Search
-- Product Details
-- Cart Management
-- Checkout
-- Invoice Verification
+Every AI-generated design was manually reviewed and refined before implementation to ensure it aligned with the project requirements and followed QA automation best practices.
 
-The AI-generated output was reviewed and refined before finalization.
-
-The following improvements were made during validation:
-
-- Removed unsupported scenarios such as email verification and account lockout.
-- Removed assumptions related to external payment gateway failures that were outside the assignment scope.
-- Replaced hardcoded order identifiers with dynamically generated Order IDs.
-- Added automation traceability using the **Automation Candidate** and **Automation Status** columns.
-
-The finalized manual test cases were saved in `docs/manual-test-cases.csv` and are intended to serve as the basis for the upcoming Playwright UI and API automation.
+The finalized framework design was documented in `docs/framework-design.md` before development began.

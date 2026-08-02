@@ -140,3 +140,57 @@ Generated a reusable `playwright.config.js` that loads configuration from `confi
 - Added `forbidOnly` and `workers` configuration for better CI support.
 - Verified that the framework successfully loaded `.env` values and executed without configuration errors.
 - Confirmed the Playwright configuration was ready for framework implementation.
+
+
+## Entry 3 – Base Page Implementation
+
+### Prompt
+
+Read PROJECT_CONTEXT.md first and use it as the project context.
+
+I am implementing the Playwright framework.
+
+Generate only the contents of `pages/BasePage.js`.
+
+Requirements:
+
+- Use JavaScript.
+- Create a reusable BasePage class.
+- Accept the Playwright page object through the constructor.
+- Include common reusable methods:
+  - navigate(url)
+  - getTitle()
+  - getCurrentUrl()
+  - click(locator)
+  - fill(locator, text)
+  - type(locator, text)
+  - clear(locator)
+  - press(locator, key)
+  - waitForVisible(locator)
+  - waitForHidden(locator)
+  - isVisible(locator)
+  - getText(locator)
+  - getAttribute(locator, attribute)
+  - selectDropdown(locator, value)
+  - check(locator)
+  - uncheck(locator)
+  - hover(locator)
+  - screenshot(name)
+- Use the Playwright Locator API.
+- Keep methods generic and reusable.
+- Do not include page-specific locators.
+- Add comments for maintainability.
+- Do not generate any other files.
+
+### AI Response Summary
+
+Generated a reusable `BasePage` class containing common Playwright UI actions such as navigation, clicking, filling fields, typing, waiting for elements, retrieving text and attributes, interacting with dropdowns and checkboxes, hovering over elements, and capturing screenshots. The implementation followed the Page Object Model approach and avoided page-specific logic.
+
+### Validation Notes
+
+- Reviewed the generated BasePage implementation for reusability and maintainability.
+- Enhanced the implementation to support both selector strings and Playwright `Locator` objects.
+- Added common navigation helpers such as `waitForPageLoad()`, `reload()`, and `goBack()`.
+- Added reusable utility methods including `scrollIntoView()` and `waitForTimeout()` for debugging purposes.
+- Improved screenshot handling by storing screenshots in the dedicated `screenshots` directory.
+- Verified that the final BasePage remained generic, reusable, and aligned with the framework architecture before integrating it into the project.
