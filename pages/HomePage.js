@@ -1,54 +1,58 @@
 const BasePage = require("./BasePage");
 
+/**
+ * HomePage
+ * Encapsulates the Home page interactions and navigation.
+ */
 class HomePage extends BasePage {
   constructor(page) {
     super(page);
 
-    // Locators
-    this.searchInput = '[data-test="search-query"]';
-    this.cartButton = '[data-test="nav-cart"]';
-    this.loginButton = '[data-test="nav-sign-in"]';
-    this.registerButton = '[data-test="nav-register"]';
+    // Page path
+    this.homePath = "/";
+
+    // Home page locators
+    this.searchInput = "#search-query";
+    this.searchButton = "button[type='submit']";
+  }
+
+  /**
+   * Navigate to the Home page.
+   */
+  async navigateToHome() {
+    await this.navigate(this.homePath);
+    await this.waitForPageLoad();
+    await this.waitForVisible(this.searchInput);
   }
 
   /**
    * Search for a product.
-   * @param {string} searchTerm
+   * @param {string} productName
    */
-  async searchProduct(searchTerm) {
+  async searchProduct(productName) {
     await this.waitForVisible(this.searchInput);
-    await this.fill(this.searchInput, searchTerm);
-    await this.press(this.searchInput, "Enter");
+    await this.fill(this.searchInput, productName);
+    await this.click(this.searchButton);
+    await this.waitForPageLoad();
   }
 
   /**
-   * Open a product by its name.
+   * Build a locator for a product in search results.
+   * @param {string} productName
+   * @returns {string}
+   */
+    productResultLocator(productName) {
+    return `//h5[@data-test="product-name" and normalize-space()="${productName}"]`;
+    }
+  /**
+   * Open a product from the search results.
    * @param {string} productName
    */
   async openProduct(productName) {
-    const locator = `text=${productName}`;
-    await this.click(locator);
-  }
-
-  /**
-   * Open Cart page.
-   */
-  async openCart() {
-    await this.click(this.cartButton);
-  }
-
-  /**
-   * Open Login page.
-   */
-  async openLogin() {
-    await this.click(this.loginButton);
-  }
-
-  /**
-   * Open Registration page.
-   */
-  async openRegistration() {
-    await this.click(this.registerButton);
+    const productLocator = this.productResultLocator(productName);
+    await this.waitForVisible(productLocator);
+    await this.click(productLocator);
+    await this.waitForPageLoad();
   }
 }
 

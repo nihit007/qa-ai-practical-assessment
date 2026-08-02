@@ -544,3 +544,20 @@ Updated password generation to meet application validation rules.
 Verified successful registration by checking redirection to the login page instead of relying on a success message.
 
 These changes improved the stability and reliability of the smoke test.
+
+## Entry 18
+
+## Entry X – Login UI Automation
+
+AI was used to generate the initial Login Page Object and smoke test.
+
+During implementation, the generated code was manually validated against the actual application.
+
+The following refinements were made:
+
+- Replaced AI-generated locators with verified application locators.
+- Used environment variables from `.env` for login credentials instead of hardcoding values.
+- Verified successful login by asserting redirection to the `/account` page.
+- Reviewed and refined the generated code to align with the framework architecture and Playwright best practices.
+
+The final implementation was tested successfully and integrated into the smoke test suite.
