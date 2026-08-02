@@ -12,13 +12,13 @@ class ProductPage extends BasePage {
     this.productPath = "/product/";
 
     // Locators
-    this.productName = '[data-test="product-title"]';
-    this.productPrice = '[data-test="product-price"]';
-    this.productDescription = '[data-test="product-description"]';
+    this.productName = '//h1';
+    this.productPrice = "//span[@data-test='unit-price']";
+    this.productDescription = '#description';
     this.productAvailability = '[data-test="product-stock"]';
 
     this.quantityInput = '[data-test="product-quantity"]';
-    this.addToCartButton = '[data-test="add-to-cart"]';
+    this.addToCartButton = '#btn-add-to-cart';
   }
 
   /**
@@ -33,9 +33,10 @@ class ProductPage extends BasePage {
   /**
    * Get product name.
    */
-  async getProductName() {
-    return this.getText(this.productName);
-  }
+    async getProductName() {
+    const productName = await this.getText(this.productName);
+    return productName?.trim() ?? "";
+    }
 
   /**
    * Get product price.

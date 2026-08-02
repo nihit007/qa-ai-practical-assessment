@@ -545,9 +545,8 @@ Verified successful registration by checking redirection to the login page inste
 
 These changes improved the stability and reliability of the smoke test.
 
-## Entry 18
 
-## Entry X – Login UI Automation
+## Entry 18 – Login UI Automation
 
 AI was used to generate the initial Login Page Object and smoke test.
 
@@ -561,3 +560,19 @@ The following refinements were made:
 - Reviewed and refined the generated code to align with the framework architecture and Playwright best practices.
 
 The final implementation was tested successfully and integrated into the smoke test suite.
+
+## Entry 19 – Product Search UI Automation
+
+AI was used to generate the initial Home Page Object and Product Search smoke test.
+
+The generated implementation was manually reviewed against the actual application.
+
+The following refinements were made:
+
+- Verified all Home page locators using browser developer tools.
+- Updated the product result locator to use the application's `data-test="product-name"` attribute.
+- Separated product result verification from product card navigation by creating dedicated reusable locator methods.
+- Removed incorrect assumptions about URL changes after search and validated search results using UI elements instead.
+- Reviewed and refined the generated code to align with the framework architecture and Playwright best practices.
+
+The Product Search smoke test was executed successfully and integrated into the smoke test suite.
