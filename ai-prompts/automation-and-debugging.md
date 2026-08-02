@@ -594,3 +594,20 @@ The following refinements were made:
 - Reviewed and refined the generated implementation to align with the project architecture and Playwright best practices.
 
 The Product Details smoke test was successfully executed and integrated into the smoke test suite.
+
+## Entry X – Cart UI Automation
+
+AI was used to generate the initial Cart Page Object and Cart smoke test.
+
+During implementation, the generated code was manually validated against the actual application.
+
+The following refinements were made:
+
+- Verified cart page locators using browser developer tools.
+- Replaced generated locators with stable `data-test` attributes where available.
+- Implemented reusable methods to retrieve product name, quantity, price, and cart total.
+- Added a reusable method to navigate to the shopping cart.
+- Kept all assertions within the test layer to maintain separation of concerns.
+- Reviewed and refined the generated implementation to align with the project architecture and Playwright best practices.
+
+The Cart smoke test was successfully executed and integrated into the smoke test suite.

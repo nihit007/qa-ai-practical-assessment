@@ -36,7 +36,10 @@ class LoginPage extends BasePage {
   async login(email, password) {
     await this.fill(this.emailInput, email);
     await this.fill(this.passwordInput, password);
+    console.log("Clicking Login...");
     await this.click(this.loginButton);
+    console.log("Login button clicked.");
+
   }
 
   /**

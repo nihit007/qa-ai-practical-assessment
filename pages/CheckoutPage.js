@@ -1,95 +1,186 @@
 const BasePage = require("./BasePage");
 
-/**
- * CheckoutPage
- * Handles checkout page interactions.
- */
 class CheckoutPage extends BasePage {
   constructor(page) {
     super(page);
 
-    // Shipping Address
-    this.shippingFirstName = '[data-test="shipping-first-name"]';
-    this.shippingLastName = '[data-test="shipping-last-name"]';
-    this.shippingAddress1 = '[data-test="shipping-address-line1"]';
-    this.shippingAddress2 = '[data-test="shipping-address-line2"]';
-    this.shippingCity = '[data-test="shipping-city"]';
-    this.shippingState = '[data-test="shipping-state"]';
-    this.shippingZip = '[data-test="shipping-zip"]';
-    this.shippingCountry = '[data-test="shipping-country"]';
-    this.shippingPhone = '[data-test="shipping-phone"]';
-    this.shippingEmail = '[data-test="shipping-email"]';
+    // ==========================
+    // Step 1 - Cart
+    // ==========================
+    this.proceedToCheckoutButton = "//button[@data-test='proceed-1']";
 
-    // Billing Address
-    this.billingFirstName = '[data-test="billing-first-name"]';
-    this.billingLastName = '[data-test="billing-last-name"]';
-    this.billingAddress1 = '[data-test="billing-address-line1"]';
-    this.billingAddress2 = '[data-test="billing-address-line2"]';
-    this.billingCity = '[data-test="billing-city"]';
-    this.billingState = '[data-test="billing-state"]';
-    this.billingZip = '[data-test="billing-zip"]';
-    this.billingCountry = '[data-test="billing-country"]';
-    this.billingPhone = '[data-test="billing-phone"]';
-    this.billingEmail = '[data-test="billing-email"]';
+    // ==========================
+    // Step 2 - Guest Checkout
+    // ==========================
+    this.guestTab = "//a[@href='#guest-tab']";
+    this.guestEmailInput = "#guest-email";
+    this.guestFirstNameInput = "#guest-first-name";
+    this.guestLastNameInput = "#guest-last-name";
+    this.continueAsGuestButton = "//input[@data-test='guest-submit']";
+    this.proceedToCheckoutButton2 = "//button[@data-test='proceed-2-guest']";
 
-    this.sameAsShippingCheckbox =
-      '[data-test="billing-same-as-shipping"]';
+    // ==========================
+    // Step 3 - Billing Address
+    // ==========================
+    this.countryDropdown = "#country";
+    this.postalCodeInput = "#postal_code";
+    this.houseNumberInput = "#house_number";
+    this.streetInput = "#street";
+    this.cityInput = "#city";
+    this.stateInput = "#state";
+    this.billingProceedButton3 = "//button[@data-test='proceed-3']";
 
-    // Checkout
-    this.placeOrderButton = '[data-test="place-order"]';
-    this.orderConfirmation = '[data-test="order-confirmation"]';
+    // ==========================
+    // Step 4 - Payment
+    // ==========================
+    this.paymentDropdown = "#payment-method";
+    this.confirmButton = "//button[contains(text(),'Confirm')]";
+
+    // ==========================
+    // Payment Success
+    // ==========================
+    this.paymentSuccessMessage =
+      "//div[@data-test='payment-success-message']";
+
+    // ==========================
+    // Order Confirmation
+    // ==========================
+    this.orderSuccessMessage = "//div[@id='order-confirmation']";
+    this.invoiceNumber = "//div[@id='order-confirmation']//span";
   }
 
-  /**
-   * Enter shipping address.
-   */
-  async enterShippingAddress(address) {
-    await this.fill(this.shippingFirstName, address.firstName);
-    await this.fill(this.shippingLastName, address.lastName);
-    await this.fill(this.shippingAddress1, address.addressLine1);
-    await this.fill(this.shippingAddress2, address.addressLine2 || "");
-    await this.fill(this.shippingCity, address.city);
-    await this.fill(this.shippingState, address.state);
-    await this.fill(this.shippingZip, address.zip);
-    await this.selectDropdown(this.shippingCountry, address.country);
-    await this.fill(this.shippingPhone, address.phone);
-    await this.fill(this.shippingEmail, address.email);
+  // ==========================
+  // Cart
+  // ==========================
+  async proceedFromCart() {
+    await this.waitForVisible(this.proceedToCheckoutButton);
+    await this.click(this.proceedToCheckoutButton);
+    await this.waitForPageLoad();
   }
 
-  /**
-   * Enter billing address.
-   */
-  async enterBillingAddress(address) {
-    if (address.sameAsShipping) {
-      await this.click(this.sameAsShippingCheckbox);
-      return;
+  // ==========================
+  // Guest Checkout
+  // ==========================
+  async continueAsGuest(details) {
+    await this.waitForVisible(this.guestTab);
+    await this.click(this.guestTab);
+
+    await this.fill(this.guestEmailInput, details.email);
+    await this.fill(this.guestFirstNameInput, details.firstName);
+    await this.fill(this.guestLastNameInput, details.lastName);
+
+    await this.click(this.continueAsGuestButton);
+    await this.waitForPageLoad();
+  }
+
+  async proceedFromGuest() {
+    await this.waitForVisible(this.proceedToCheckoutButton2);
+    await this.click(this.proceedToCheckoutButton2);
+    await this.waitForPageLoad();
+  }
+
+  // ==========================
+  // Billing Address
+  // ==========================
+  async fillBillingAddress(details) {
+    await this.waitForVisible(this.countryDropdown);
+
+    await this.page.selectOption(this.countryDropdown, {
+      label: details.country,
+    });
+
+    await this.fill(this.postalCodeInput, details.postalCode);
+    await this.fill(this.houseNumberInput, details.houseNumber);
+    await this.fill(this.streetInput, details.street);
+    await this.fill(this.cityInput, details.city);
+    await this.fill(this.stateInput, details.state);
+
+    await this.click(this.billingProceedButton3);
+    await this.waitForPageLoad();
+  }
+
+  // ==========================
+  // Payment
+  // ==========================
+  async selectPaymentMethod(method = "Cash on Delivery") {
+    await this.waitForVisible(this.paymentDropdown);
+
+    await this.page.selectOption(this.paymentDropdown, {
+      label: method,
+    });
+  }
+
+  async confirmPayment() {
+    await this.waitForVisible(this.confirmButton);
+
+    // First Confirm
+    await this.click(this.confirmButton);
+
+    // Wait until payment success message appears
+    await this.waitForVisible(this.paymentSuccessMessage);
+
+    // Give the UI a moment to render
+    await this.page.waitForTimeout(1000);
+
+    // Second Confirm
+    await this.click(this.confirmButton);
+
+    await this.waitForPageLoad();
+}
+
+async confirmOrder() {
+    await this.waitForVisible(this.confirmButton);
+
+    await this.click(this.confirmButton);
+
+    await this.waitForVisible(this.orderSuccessMessage);
+}
+
+  // ==========================
+  // Order Confirmation
+  // ==========================
+  async getOrderSuccessMessage() {
+    await this.waitForVisible(this.orderSuccessMessage);
+
+    const text = await this.getText(this.orderSuccessMessage);
+
+    return text.replace(/INV-\d+/, "").trim();
+  }
+
+  async getInvoiceNumber() {
+    await this.waitForVisible(this.invoiceNumber);
+
+    return (await this.getText(this.invoiceNumber)).trim();
+  }
+
+  async getPaymentSuccessMessage() {
+    if (
+        await this.page
+            .locator(this.paymentSuccessMessage)
+            .isVisible()
+            .catch(() => false)
+    ) {
+        return (await this.getText(this.paymentSuccessMessage)).trim();
     }
 
-    await this.fill(this.billingFirstName, address.firstName);
-    await this.fill(this.billingLastName, address.lastName);
-    await this.fill(this.billingAddress1, address.addressLine1);
-    await this.fill(this.billingAddress2, address.addressLine2 || "");
-    await this.fill(this.billingCity, address.city);
-    await this.fill(this.billingState, address.state);
-    await this.fill(this.billingZip, address.zip);
-    await this.selectDropdown(this.billingCountry, address.country);
-    await this.fill(this.billingPhone, address.phone);
-    await this.fill(this.billingEmail, address.email);
-  }
+    return "";
+}
 
-  /**
-   * Place order.
-   */
-  async placeOrder() {
-    await this.click(this.placeOrderButton);
-  }
+  // ==========================
+  // Complete Checkout
+  // ==========================
+  async completeGuestCheckout(details) {
+    await this.proceedFromCart();
 
-  /**
-   * Get order confirmation message.
-   */
-  async getOrderConfirmation() {
-    await this.waitForVisible(this.orderConfirmation);
-    return this.getText(this.orderConfirmation);
+    await this.continueAsGuest(details);
+
+    await this.proceedFromGuest();
+
+    await this.fillBillingAddress(details);
+
+    await this.selectPaymentMethod(details.paymentMethod);
+
+    await this.confirmPayment();
   }
 }
 
