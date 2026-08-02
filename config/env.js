@@ -22,4 +22,10 @@ const config = {
   testPassword: process.env.TEST_PASSWORD || "",
 };
 
-module.exports = config;
+module.exports = module.exports = {
+  baseUrl: process.env.BASE_URL,
+  apiBaseUrl: process.env.API_BASE_URL,
+
+  testEmail: process.env.TEST_EMAIL,
+  testPassword: process.env.TEST_PASSWORD,
+};

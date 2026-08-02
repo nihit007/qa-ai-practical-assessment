@@ -530,3 +530,17 @@ Generated a reusable page object supporting invoice display, invoice status retr
 - Standardized locator names.
 - Simplified download handling.
 - Confirmed reusable implementation aligned with the Page Object Model.
+
+### Entry 17 
+
+AI generated the initial Registration Page Object and smoke test structure. During implementation, the generated code was manually validated against the actual application. The following refinements were made:
+
+Replaced AI-generated locators with verified application locators.
+Removed the nonexistent Confirm Password field.
+Updated country selection to use country codes instead of country names.
+Used stable test data (Country = IN, Postal Code = 201013) to ensure reliable address auto-population.
+Corrected phone number generation to numeric values only.
+Updated password generation to meet application validation rules.
+Verified successful registration by checking redirection to the login page instead of relying on a success message.
+
+These changes improved the stability and reliability of the smoke test.

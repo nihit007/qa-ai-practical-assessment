@@ -1,22 +1,27 @@
 ﻿const BasePage = require("./BasePage");
 
+/**
+ * LoginPage
+ * Handles user login interactions.
+ */
 class LoginPage extends BasePage {
   constructor(page) {
     super(page);
 
-    // Page URL
+    // Login page URL
     this.loginPath = "/auth/login";
 
-    // Locators
-    this.emailInput = '[data-test="email"]';
-    this.passwordInput = '[data-test="password"]';
-    this.loginButton = '[data-test="login-submit"]';
-    this.loginError = ".alert-danger";
-    this.userMenu = '[data-test="nav-menu"]';
+    // Login form locators
+    this.emailInput = "#email";
+    this.passwordInput = "#password";
+    this.loginButton = "input[type='submit']";
+
+    // Error message
+    this.loginError = "//div[text()='Invalid email or password']";
   }
 
   /**
-   * Navigate to Login page.
+   * Navigate to the login page.
    */
   async navigateToLogin() {
     await this.navigate(this.loginPath);
@@ -24,7 +29,9 @@ class LoginPage extends BasePage {
   }
 
   /**
-   * Login with valid credentials.
+   * Login with email and password.
+   * @param {string} email
+   * @param {string} password
    */
   async login(email, password) {
     await this.fill(this.emailInput, email);
@@ -33,17 +40,12 @@ class LoginPage extends BasePage {
   }
 
   /**
-   * Get login error message.
+   * Get the login error message.
+   * @returns {Promise<string|null>}
    */
   async getLoginError() {
-    return await this.getText(this.loginError);
-  }
-
-  /**
-   * Verify user is logged in.
-   */
-  async isUserLoggedIn() {
-    return await this.isVisible(this.userMenu);
+    await this.waitForVisible(this.loginError);
+    return this.getText(this.loginError);
   }
 }
 

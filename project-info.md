@@ -104,24 +104,21 @@ The planning activities included:
 The generated strategy was manually reviewed to ensure it aligned with the finalized Requirement Analysis and project scope before it was finalized.
 
 ---
-
 ## 6. How AI was used for Automation Design
 
-AI was used to assist in designing the automation framework before any implementation code was written.
+AI was used to assist in designing and implementing a scalable Playwright JavaScript automation framework following the Page Object Model (POM) approach. Rather than generating the entire framework at once, an architecture-first approach was followed, where each framework component was designed, reviewed, refined, and implemented incrementally.
 
-Instead of generating the entire framework at once, the framework was designed incrementally using an architecture-first approach.
+AI-assisted activities included:
 
-The AI-assisted design activities included:
+- Designing the overall framework architecture using Prism Framework principles.
+- Defining a scalable folder structure for UI and API automation.
+- Creating a reusable BasePage for common UI interactions.
+- Designing Page Object Model classes for Login, Registration, Home, Product, Cart, Checkout, and Invoice pages.
+- Designing a reusable API service layer consisting of ApiClient, AuthAPI, ProductAPI, CartAPI, and InvoiceAPI.
+- Creating reusable utility modules for logging, waits, helper methods, and dynamic test data generation using Faker.
+- Designing centralized configuration using `.env`, `config/env.js`, and `playwright.config.js`.
+- Planning reusable test data management, environment configuration, reporting, screenshots, traces, and browser execution settings.
 
-- Designing a scalable Playwright JavaScript framework using Prism Framework principles.
-- Defining the overall framework architecture before implementation.
-- Designing a reusable folder structure for UI and API automation.
-- Planning the Page Object Model (POM) for UI automation.
-- Designing a dedicated API service layer for backend automation.
-- Planning reusable utilities, fixtures, configuration, and test data management.
-- Creating a centralized environment configuration using `.env` and `config/env.js`.
-- Designing a reusable Playwright configuration with environment-driven execution, reporting, retries, screenshots, traces, and browser configuration.
+Every AI-generated implementation was manually reviewed, validated, and refined before being added to the project. Redundant code was removed, naming conventions were standardized, reusable methods were improved, and the framework structure was kept consistent across all modules.
 
-Every AI-generated design was manually reviewed and refined before implementation to ensure it aligned with the project requirements and followed QA automation best practices.
-
-The finalized framework design was documented in `docs/framework-design.md` before development began.
+The finalized framework architecture and implementation details are documented in `docs/framework-design.md`.
