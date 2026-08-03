@@ -694,3 +694,108 @@ Verified login endpoint, extracted access_token from response, and stored bearer
 
 Result:
 Registration and Login API flow completed successfully.
+
+
+## Entry- 25 Purchase Flow API Automation
+
+### Prompt:
+Create an end-to-end Purchase Flow API automation using Playwright.
+
+### Requirements:
+- Register a new user dynamically.
+- Login and retrieve bearer token.
+- Fetch available products.
+- Select a product dynamically.
+- Create a shopping cart.
+- Add selected product to the cart.
+- Validate cart contents.
+- Generate invoice for the cart.
+- Validate successful invoice creation (201).
+- Keep the framework modular and reusable.
+
+---
+
+## Purchase Flow API Debugging
+
+### Issue:
+Add to Cart API returned HTTP 404 (Resource not found).
+
+### Root Cause:
+Incorrect endpoint was being used while adding products to the cart.
+
+### Resolution:
+Updated the CartAPI implementation to use the correct cart endpoint for adding products.
+
+### Result:
+Product was successfully added to the cart (HTTP 200).
+
+------------------------------------------------------------
+
+### Issue:
+Invoice API returned HTTP 422 (Billing country does not match the entered address).
+
+### Root Cause:
+Billing address values in the invoice request did not exactly match the registered user's address.
+
+### Resolution:
+Modified the invoice payload to dynamically populate billing address fields from the registered user's address returned by the Registration API.
+
+### Result:
+Invoice validation succeeded and the billing address mismatch was resolved.
+
+------------------------------------------------------------
+
+### Issue:
+Invoice API required guest information for successful invoice generation.
+
+### Root Cause:
+The invoice payload was missing guest details required by the checkout process.
+
+### Resolution:
+Added the following fields to the invoice payload:
+- `guest_first_name`
+- `guest_last_name`
+- `guest_email`
+
+### Result:
+Invoice request was accepted successfully.
+
+------------------------------------------------------------
+
+### Issue:
+Purchase Flow test failed with `ReferenceError: password is not defined`.
+
+### Root Cause:
+The password variable was referenced before being declared in the test.
+
+### Resolution:
+Created a reusable password variable and used it for both Registration and Login APIs.
+
+### Result:
+Registration and Login completed successfully.
+
+------------------------------------------------------------
+
+### Issue:
+Invoice generation initially failed due to inconsistent billing address values.
+
+### Root Cause:
+Hardcoded invoice data contained values that differed from the address used during user registration.
+
+### Resolution:
+Reused the registered user's address object (`registerBody.address`) while creating the invoice payload instead of hardcoding billing details.
+
+### Result:
+Invoice was generated successfully (HTTP 201).
+
+------------------------------------------------------------
+
+### Final Result:
+- User Registration ✔
+- User Login ✔
+- Product Retrieval ✔
+- Cart Creation ✔
+- Add Product to Cart ✔
+- Cart Validation ✔
+- Invoice Generation ✔
+- End-to-End Purchase Flow API Automation Passed Successfully ✔
