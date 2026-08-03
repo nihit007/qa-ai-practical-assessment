@@ -9,13 +9,21 @@ class InvoiceAPI extends ApiClient {
     super(apiRequestContext);
 
     // Centralized endpoints
-    this.endpoints = {
-      invoices: "/invoices",
-      invoiceById: "/invoices/{invoiceId}",
-      verifyInvoice: "/invoices/{invoiceId}/verify",
-      downloadInvoice: "/invoices/{invoiceId}/download",
-    };
+ this.endpoints = {
+  invoices: "/invoices",
+  guestInvoice: "/invoices/guest",
+  invoiceById: "/invoices/{invoiceId}",
+  verifyInvoice: "/invoices/{invoiceId}/verify",
+  downloadInvoice: "/invoices/{invoiceId}/download",
+};
   }
+
+  async createGuestInvoice(invoiceData) {
+  return this.post(
+    this.endpoints.guestInvoice,
+    invoiceData
+  );
+}
 
   /**
    * Build endpoint by replacing placeholders.
@@ -56,9 +64,15 @@ class InvoiceAPI extends ApiClient {
    * Create invoice.
    * @param {Object} invoiceData
    */
-  async createInvoice(invoiceData = {}) {
-    return this.post(this.endpoints.invoices, invoiceData);
-  }
+async createInvoice(invoiceData, token) {
+  return this.post(
+    this.endpoints.invoices,
+    invoiceData,
+    {
+      Authorization: `Bearer ${token}`,
+    }
+  );
+}
 
   /**
    * Get invoice by ID.

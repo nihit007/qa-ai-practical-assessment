@@ -122,3 +122,13 @@ AI-assisted activities included:
 Every AI-generated implementation was manually reviewed, validated, and refined before being added to the project. Redundant code was removed, naming conventions were standardized, reusable methods were improved, and the framework structure was kept consistent across all modules.
 
 The finalized framework architecture and implementation details are documented in `docs/framework-design.md`.
+
+
+### API Automation
+
+Completed:
+- User Registration API
+- User Login API
+- Dynamic test data generation
+- Bearer token handling
+- Reusable API client

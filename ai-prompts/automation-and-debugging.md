@@ -638,3 +638,59 @@ The initial automation plan included a dedicated Invoice Verification smoke test
 During implementation, it was identified that the invoice functionality is not fully available through the current UI workflow. Although invoice details are generated after a successful checkout, a standalone invoice verification flow cannot be reliably executed.
 
 To maintain a stable smoke suite, the dedicated Invoice Verification test was removed. Invoice number validation remains part of the Guest Checkout smoke test, ensuring successful order placement is still verified without depending on incomplete UI functionality.
+
+
+
+##  Entry- 24 Authentication API Automation
+
+Prompt:
+Create reusable API automation using Playwright for user authentication.
+
+Requirements:
+- Implement reusable ApiClient for common HTTP methods.
+- Create AuthAPI module for Register and Login APIs.
+- Generate dynamic test data for unique user registration.
+- Validate successful user registration (201).
+- Validate successful login (200).
+- Extract and store bearer token for future authenticated requests.
+- Keep the framework modular and reusable.
+
+## API Registration & Login Debugging
+
+Issue:
+Registration API returned HTTP 404 (Resource not found).
+
+Root Cause:
+Incorrect API_BASE_URL was configured with '/api' suffix.
+
+Resolution:
+Updated API_BASE_URL to:
+https://api.practicesoftwaretesting.com
+
+Result:
+Register endpoint returned HTTP 201.
+
+------------------------------------------------------------
+
+Issue:
+Registration API returned HTTP 422.
+
+Root Cause:
+Password used in test data had appeared in a public data breach.
+
+Resolution:
+Updated dynamic password generation to create a unique strong password for every execution.
+
+Result:
+Registration completed successfully.
+
+------------------------------------------------------------
+
+Issue:
+API login could not proceed after registration.
+
+Resolution:
+Verified login endpoint, extracted access_token from response, and stored bearer token inside AuthAPI for future authenticated requests.
+
+Result:
+Registration and Login API flow completed successfully.

@@ -9,12 +9,11 @@ class CartAPI extends ApiClient {
     super(apiRequestContext);
 
     // Centralized endpoints
-    this.endpoints = {
-      carts: "/carts",
-      cartById: "/carts/{cartId}",
-      cartItems: "/carts/{cartId}/items",
-      cartItemById: "/carts/{cartId}/items/{itemId}",
-    };
+  this.endpoints = {
+    carts: "/carts",
+    cartById: "/carts/{cartId}",
+    cartItems: "/carts/{cartId}",
+};
   }
 
   /**
@@ -62,22 +61,21 @@ class CartAPI extends ApiClient {
    * @param {number|string} cartId
    * @param {Object} itemData
    */
-  async addItemToCart(cartId, itemData) {
-    if (!cartId) {
-      throw new Error("Cart ID is required.");
-    }
-
-    if (!itemData || typeof itemData !== "object") {
-      throw new Error("Item data is required.");
-    }
-
-    return this.post(
-      this.buildEndpoint(this.endpoints.cartItems, {
-        cartId,
-      }),
-      itemData
-    );
+async addItemToCart(cartId, productId, quantity = 1) {
+  if (!cartId) {
+    throw new Error("Cart ID is required.");
   }
+
+  return this.post(
+    this.buildEndpoint(this.endpoints.cartById, {
+      cartId,
+    }),
+    {
+      product_id: productId,
+      quantity,
+    }
+  );
+}
 
   /**
    * Update cart item.
