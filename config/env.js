@@ -11,7 +11,7 @@ const config = {
 
   apiBaseUrl:
     process.env.API_BASE_URL ||
-    "https://api.practicesoftwaretesting.com/api",
+    "https://api.practicesoftwaretesting.com",
 
   browser: process.env.BROWSER || "chromium",
 

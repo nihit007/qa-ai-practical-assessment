@@ -13,9 +13,9 @@ class AuthAPI extends ApiClient {
 
     // Update these endpoints if the API documentation uses different paths.
     this.endpoints = {
-      register: "/users/register",
-      login: "/users/login",
-    };
+    register: "/users/register",
+    login: "/users/login",
+};
   }
 
   /**
