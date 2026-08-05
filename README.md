@@ -4,7 +4,7 @@
 
 This repository contains the automation framework and supporting documentation for the **QA AI Practical Assessment**. The implementation validates the **Practice Software Testing** application through both UI and API automation using **Playwright with JavaScript**.
 
-- **Project objective:** Build a maintainable test automation framework covering end-to-end UI and API smoke scenarios for the Practice Software Testing application.
+- **Project objective:** Build a maintainable test automation framework covering end-to-end UI and API smoke scenarios, including user authentication, product purchase, checkout, invoice generation, and invoice verification for the Practice Software Testing application.
 - **Application under test:** Practice Software Testing UI and API.
 - **Technologies used:** Playwright, JavaScript, Faker, dotenv.
 - **Framework used:** Prism-inspired automation structure with Page Object Model (POM) and API service layer.
@@ -18,7 +18,7 @@ The framework is built on **Playwright with JavaScript** and follows a modular a
 
 - **Playwright with JavaScript:** Used for browser automation, network-level API requests, and HTML reporting.
 - **Prism Framework concepts:** The structure follows Prism principles by separating test execution, UI page objects, API services, utilities, data, and configuration.
-- **Page Object Model (POM):** UI interactions are encapsulated in page classes under `pages/`, such as `LoginPage`, `RegistrationPage`, `HomePage`, `ProductPage`, `CartPage`, and `CheckoutPage`.
+- **Page Object Model (POM):** UI interactions are encapsulated in page classes under `pages/`, such as `LoginPage`, `RegistrationPage`, `HomePage`, `ProductPage`, `CartPage`, `CheckoutPage`, and `InvoicePage`.
 - **API Service Layer:** API automation is implemented through reusable service classes in `api/`, including `ApiClient`, `AuthAPI`, `ProductAPI`, `CartAPI`, and `InvoiceAPI`.
 - **Reusable utilities:** Common helpers are stored in `utils/` for random data, waits, and logging.
 - **Dynamic test data:** Faker-based data generation is used for unique user registration.
@@ -30,8 +30,7 @@ The framework is built on **Playwright with JavaScript** and follows a modular a
 
 The project structure below reflects the actual folders and files in the repository.
 
-- `pages/` - UI Page Object Model classes.
-- `api/` - Reusable API client and service classes.
+- `pages/` - UI Page Object Model classes including Login, Registration, Product, Cart, Checkout, and Invoice pages.- `api/` - Reusable API client and service classes.
 - `tests/` - Playwright test suites for UI and API.
 - `config/` - Environment configuration.
 - `utils/` - Reusable utility modules.
@@ -129,7 +128,7 @@ This repository currently implements Smoke automation. A dedicated Regression su
 
 | Suite | Description |
 |-------|-------------|
-| UI Smoke | Validates critical UI flows including registration, login, product search, product details, cart, and guest checkout. |
+| UI Smoke | Validates critical UI flows including registration, login, product search, product details, cart, guest checkout, registered user checkout, invoice generation, and invoice verification. |
 | API Smoke | Validates core API workflows including registration/login and purchase flow APIs. |
 
 ---
@@ -145,6 +144,32 @@ This repository currently implements Smoke automation. A dedicated Regression su
 
 ## Automation Coverage
 
+## Key Implemented Scenarios
+
+### UI
+
+- User Registration
+- User Login
+- Product Search
+- Product Details Validation
+- Add Product to Cart
+- Cart Validation
+- Guest Checkout
+- Registered User Checkout
+- Cash on Delivery Payment
+- Order Confirmation
+- Invoice Generation
+- Invoice Verification
+
+### API
+
+- User Registration API
+- User Login API
+- Product API
+- Cart API
+- Invoice API
+- Purchase Flow API
+
 ### UI Automation
 
 | Scenario | Status |
@@ -155,8 +180,11 @@ This repository currently implements Smoke automation. A dedicated Regression su
 | Product Details | Completed |
 | Cart | Completed |
 | Guest Checkout | Completed |
+| Registered User Checkout | Completed |
 | Payment | Completed |
 | Order Confirmation | Completed |
+| Invoice Generation | Completed |
+| Invoice Verification | Completed |
 
 ### API Automation
 
@@ -244,6 +272,8 @@ The automation framework provides:
 - Environment Configuration
 - Modular Folder Structure
 - Smoke Test Suites
+- Guest and Registered User Checkout Automation
+- Invoice Generation & Verification
 - HTML Reporting
 - AI-assisted Documentation
 - Git Version Control

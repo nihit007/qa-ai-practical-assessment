@@ -715,7 +715,7 @@ Create an end-to-end Purchase Flow API automation using Playwright.
 
 ---
 
-## Purchase Flow API Debugging
+## Entry -26 Purchase Flow API Debugging
 
 ### Issue:
 Add to Cart API returned HTTP 404 (Resource not found).
@@ -799,3 +799,39 @@ Invoice was generated successfully (HTTP 201).
 - Cart Validation ✔
 - Invoice Generation ✔
 - End-to-End Purchase Flow API Automation Passed Successfully ✔
+
+## Entry 27 - Invoice Automation
+
+### Prompt
+
+```text
+Create a new InvoicePage.js following the existing Page Object Model (POM) architecture used throughout the project.
+
+Requirements:
+- Extend BasePage.
+- Reuse existing BasePage helper methods.
+- Define all locators inside the constructor.
+- Implement methods to:
+  - Open the logged-in user menu.
+  - Navigate to "My Invoices".
+  - Wait for the invoice page to load.
+  - Get the latest invoice number.
+  - Get the total invoice count.
+- Keep assertions out of the Page Object.
+- Follow the project's existing coding style, naming conventions, and folder structure.
+```
+
+### AI Assistance
+
+Cursor AI generated the initial `InvoicePage.js` implementation based on the existing Page Object Model architecture. The generated code provided the overall structure, reusable methods, and navigation flow.
+
+### Manual Refinements & Debugging
+
+- Added support for **registered user checkout** by implementing `proceedFromLoggedInUser()` in `CheckoutPage`.
+- Updated the **Login button locator** from a generic selector to a unique XPath (`//input[@value='Login']`) to resolve Playwright strict mode conflicts caused by multiple submit buttons.
+- Refined invoice page locators to match the latest application UI.
+- Added navigation from the order confirmation page to **My Invoices** through the logged-in user menu.
+- Implemented retrieval of the latest invoice number from the invoice table.
+- Added invoice verification by comparing the generated invoice number with the latest invoice displayed in **My Invoices**.
+- Resolved synchronization issues during login, checkout, and invoice navigation by introducing appropriate waits and improving locator stability.
+- Successfully automated the complete **registered user purchase flow**, including login, order placement, invoice generation, and invoice verification.

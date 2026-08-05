@@ -14,7 +14,7 @@ class LoginPage extends BasePage {
     // Login form locators
     this.emailInput = "#email";
     this.passwordInput = "#password";
-    this.loginButton = "input[type='submit']";
+    this.loginButton = "//input[@value='Login']";
 
     // Error message
     this.loginError = "//div[text()='Invalid email or password']";
@@ -33,13 +33,26 @@ class LoginPage extends BasePage {
    * @param {string} email
    * @param {string} password
    */
+ /**
+ * Login with email and password.
+ * @param {string} email
+ * @param {string} password
+ */
   async login(email, password) {
+    await this.waitForVisible(this.emailInput);
+
     await this.fill(this.emailInput, email);
     await this.fill(this.passwordInput, password);
+    console.log("Login locator:", this.loginButton);
+
+
     console.log("Clicking Login...");
     await this.click(this.loginButton);
+
     console.log("Login button clicked.");
 
+    // Wait until login completes
+    await this.waitForPageLoad();
   }
 
   /**

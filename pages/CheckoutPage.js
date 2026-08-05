@@ -18,6 +18,7 @@ class CheckoutPage extends BasePage {
     this.guestLastNameInput = "#guest-last-name";
     this.continueAsGuestButton = "//input[@data-test='guest-submit']";
     this.proceedToCheckoutButton2 = "//button[@data-test='proceed-2-guest']";
+    this.proceedToCheckoutLoggedInButton = "//button[@data-test='proceed-2']";
 
     // ==========================
     // Step 3 - Billing Address
@@ -58,6 +59,14 @@ class CheckoutPage extends BasePage {
     await this.waitForPageLoad();
   }
 
+    /**
+     * Proceed from Logged In screen.
+     */
+    async proceedFromLoggedInUser() {
+    await this.waitForVisible(this.proceedToCheckoutLoggedInButton);
+    await this.click(this.proceedToCheckoutLoggedInButton);
+    await this.waitForPageLoad();
+    }
   // ==========================
   // Guest Checkout
   // ==========================
@@ -114,6 +123,7 @@ async confirmPayment() {
   await this.waitForVisible(this.confirmButton);
 
   await this.click(this.confirmButton);
+  console.log(await this.page.url());
 
   // Wait until payment success message appears
   await this.page
@@ -125,26 +135,20 @@ async confirmPayment() {
 }
 
 async confirmOrder() {
-  // Wait for the payment success message first
-  await this.page.locator(this.paymentSuccessMessage).waitFor({
-    state: "visible",
-    timeout: 15000,
-  });
+  // Wait until payment is successful
+  await this.waitForVisible(this.paymentSuccessMessage);
 
-  // Wait until the Confirm button is enabled and clickable
-  await this.page.locator(this.confirmButton).waitFor({
-    state: "visible",
-    timeout: 10000,
-  });
+  // Wait until Confirm button is visible
+  await this.waitForVisible(this.confirmButton);
 
-  await this.page.waitForTimeout(1000);
+  // Small stabilization delay for the UI
+  await this.page.waitForTimeout(500);
 
-  await this.page.locator(this.confirmButton).click();
+  // Click the second Confirm button
+  await this.click(this.confirmButton);
 
-  await this.page.locator(this.orderSuccessMessage).waitFor({
-    state: "visible",
-    timeout: 20000,
-  });
+  // Wait for Order Confirmation page
+  await this.waitForVisible(this.orderSuccessMessage);
 }
 
   // ==========================
@@ -163,7 +167,7 @@ async confirmOrder() {
 
     return (await this.getText(this.invoiceNumber)).trim();
   }
-  
+
 async getPaymentSuccessMessage() {
   await this.page.locator(this.paymentSuccessMessage).waitFor({
     state: "visible",
